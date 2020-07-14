@@ -2,11 +2,24 @@ require 'sinatra'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
-require './models'
-require './validations'
-require './counter'
+require './servises/models'
+require './servises/request_params_validator'
+require './servises/counter'
 require 'pry'
 # require 'sinatra/param'
+
+
+
+
+
+
+# Добавить валидацию на оценки принимает значение от 1 до 5
+# Добавить скрипт "Скрипт должен использовать созданный JSON API сервер (можно посылать запросы курлом или еще чем-нибудь)"
+# Добавить тесты для экшнов
+
+
+
+
 
 get '/create-post' do
   # example request: # http://127.0.0.1:4567/create-post?login=unic_new_login&title=new-test-title&text=new-test-test&ip_address=new-author-ip

@@ -1,4 +1,3 @@
-# require './models'
 require 'pry'
 require 'sinatra/reloader'
 
