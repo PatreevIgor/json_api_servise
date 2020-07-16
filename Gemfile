@@ -8,5 +8,7 @@ gem 'rspec'
 gem 'sinatra-activerecord'
 gem 'sinatra-reloader'
 gem 'faker'
-gem  'pry'
+gem 'pry'
+gem 'database_cleaner'
+
 # gem 'sinatra-param', require: 'sinatra/param'

@@ -6,6 +6,7 @@ require './servises/models'
 require './servises/request_params_validator'
 require './servises/counter'
 require 'pry'
+
 # require 'sinatra/param'
 
 
@@ -16,7 +17,8 @@ require 'pry'
 # Добавить валидацию на оценки принимает значение от 1 до 5
 # Добавить скрипт "Скрипт должен использовать созданный JSON API сервер (можно посылать запросы курлом или еще чем-нибудь)"
 # Добавить тесты для экшнов
-
+# Добавить нэймспейсы для сервисов
+# Сделать отдельный класс Connection
 
 
 

@@ -1,15 +1,12 @@
 require 'pry'
 require 'sinatra/reloader'
+require './servises/connection.rb'
 
 class Counter
   attr_reader :conn
 
   def initialize
-    @conn = PG.connect(dbname: 'json_dev_api_database',
-                       user: 'activebilling',
-                       password: 'password',
-                       port: 5432,
-                       host: 'localhost')
+    @conn = Connection.to_db
   end
 
   def average_post_rating(post_id)

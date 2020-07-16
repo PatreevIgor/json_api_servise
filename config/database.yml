@@ -14,3 +14,11 @@ production:
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
+
+test:
+  adapter: postgresql
+  host: localhost
+  port: 5432
+  username: activebilling
+  password: 'password'
+  database: json_dev_api_database_test
