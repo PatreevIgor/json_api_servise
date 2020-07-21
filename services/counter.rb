@@ -1,7 +1,8 @@
 require 'pry'
 require 'sinatra/reloader'
-require './servises/connection.rb'
+require './services/connection.rb'
 
+# DbRequestExecuter ?
 class Counter
   attr_reader :conn
 

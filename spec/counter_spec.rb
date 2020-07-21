@@ -71,3 +71,87 @@ describe Counter do
     end
   end
 end
+
+# `
+# Доработать: 
+
+
+# 2. почему создание поста это гет?  get '/create-post
+
+#   должно быть пост
+
+#   add-estimate-to-post тоже самое
+
+#   ну и что за тире в урле?
+
+#   кароче рест архитектуры нету
+
+#   RequestParamsValidator почему только в 1 экшене?
+
+
+# User.where(login: params[:login]).empty? - есть вроде метод exist? который более быстрый, но нужно проверить точно
+# есть вроде еще find_or_create
+
+
+
+# ну я бы написал так:
+# post '/posts/' do
+#   if create_post_request_params_validator.valid?
+#     post_creator.create_post
+
+#     if post_creator.success?
+#       json success_response(post_creator.created_post)
+#     else
+#       json error_response(post_creator.error)
+#     end
+#   else
+#     json error_response(create_post_request_params_validator.error)
+#   end
+# end
+
+
+
+
+# кароч нужен сервис обджект
+
+# внутри которого будет создание и прочее
+
+# а не явно из экшена
+
+
+
+
+# servises  - services
+
+# почему все модели в 1 файле?
+
+# должна быть папка models
+
+
+# Counter херовое нахвание
+
+
+# @required_parameters = [:title, :text, :ip_address, :login] - это ж в константе должно быть
+
+# ну и валидации нормальные должны быть а не просто проверка на наличие
+
+# эктив модел валидайшн
+
+
+
+
+# attr_reader :params - должно быть публичным так как ты из вне параметры передаешь
+
+# average_post_rating оно в норм виде конвертится в джейсон? есть пример?
+
+# должен быть джейсон:
+# [
+# {ip: "11.11.11.11", logins: ["gopa1", "gopa2", ...]},
+# {ip: "22.22.22.22", logins: ["zalupa1", "zalupa2", ...]},
+# ...
+# ]
+
+
+# bulk import 
+# 1. Проверить на скорость
+# `

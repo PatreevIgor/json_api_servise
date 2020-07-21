@@ -2,33 +2,57 @@ require 'sinatra'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
-require './servises/models'
-require './servises/request_params_validator'
-require './servises/counter'
+require './services/models'
+require './services/create_post_params_validator'
+require './services/create_estimation_params_validator'
+require './services/post_creater'
+require './services/create_post_responser'
+require './services/create_estimation_responser'
+require './services/counter'
+require './services/estimation_creater'
 require 'pry'
 
-get '/create-post' do
-  # example request: # http://127.0.0.1:4567/create-post?login=unic_new_login&title=new-test-title&text=new-test-test&ip_address=new-author-ip
+before do
+  next unless request.post?
+  @request_params = JSON.parse(request.body.read, symbolize_names: true)
+end
 
-  if RequestParamsValidator.new(params).valid_params?
-    User.create(login: params[:login]) if User.where(login: params[:login]).empty?
+post '/create_post' do
+  # if post example request: # curl -i -X POST -H "Content-Type: application/json" -d '{"login":"unic_new_login","title":"new-test-title","text":"new-test-test","ip_address":"new-author-ip"}' http://127.0.0.1:4567/create_post
 
-    json Post.create(title: params[:title], text: params[:text], ip_address: params[:ip_address])
+  if create_post_params_validator.valid?
+    user = User.find_or_create_by(login: request_params[:login])
+    post_params.merge!(user_id: user.id)
+
+    post_creator.create_post
+
+    if post_creator.success?
+      json create_post_responser.success_response
+    else
+      json create_post_responser.error_response
+    end
   else
     json status 422
   end
 end
 
-get '/add-estimate-to-post' do
-  # example request: http://127.0.0.1:4567/add-estimate-to-post?post_id=55&estimate=5
+post '/create_estimation' do
+  # if post example request: # curl -i -X POST -H "Content-Type: application/json" -d '{"post_id":"20028","estimation":"5"}' http://127.0.0.1:4567/create_estimation
+  if create_estimation_params_validator.valid?
+    estimation_creator.create_estimation
 
-  Estimation.create(post_id: params[:post_id].to_i, value: params[:estimate].to_i)
-
-  json Counter.new.average_post_rating(params[:post_id].to_i)
+    if estimation_creator.success?
+      json create_estimation_responser.success_response
+    else
+      json create_estimation_responser.error_response
+    end
+  else
+    json status 422
+  end
 end
 
-get '/get-best-rate-posts' do
-  # example request: http://127.0.0.1:4567/get-best-rate-posts?n=10
+get '/get_best_rate_posts' do
+  # example request: http://127.0.0.1:4567/get_best_rate_posts?n=10
 
   json Counter.new.best_posts_post_rating_list(params[:n])
 end
@@ -37,4 +61,35 @@ get '/get-ip-list' do
   # http://127.0.0.1:4567/get-ip-list
 
   json Counter.new.ip_list
+end
+
+private
+
+# attr_reader does not work
+def request_params
+  @request_params
+end
+
+def create_estimation_params_validator
+  @create_estimation_params_validator ||= CreateEstimationParamsValidator.new(request_params)
+end
+
+def create_post_params_validator
+  @create_post_params_validator ||= CreatePostParamsValidator.new(request_params)
+end
+
+def create_post_responser
+  @create_post_responser ||= CreatePostResponser.new(post_creator.created_post)
+end
+
+def create_estimation_responser
+  @create_estimation_responser ||= CreateEstimationResponser.new(estimation_creator.created_estimation)
+end
+
+def post_creator
+  @post_creator ||= PostCreater.new(request_params)
+end
+
+def estimation_creator
+  @post_creator ||= EstimationCreater.new(request_params)
 end
