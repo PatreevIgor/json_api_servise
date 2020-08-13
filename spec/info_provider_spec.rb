@@ -1,8 +1,8 @@
 require 'spec_helper'
 require './app.rb'
 
-describe Counter do
-  subject(:counter) { described_class.new }
+describe InfoProvider do
+  subject(:info_provider) { described_class.new }
 
   describe '#average_post_rating' do
     let(:expected_result) { [{ 'title' => 'some_title', 'avg' => '2.0000000000000000' }] }
@@ -14,7 +14,7 @@ describe Counter do
       Estimation.create(post_id: post.id, value: 2)
       Estimation.create(post_id: post.id, value: 3)
 
-      expect(counter.average_post_rating(post.id).to_a).to eq(expected_result)
+      expect(info_provider.average_post_rating(post.id).to_a).to eq(expected_result)
     end
   end
 
@@ -38,7 +38,7 @@ describe Counter do
       Estimation.create(post_id: post3.id, value: 4)
       Estimation.create(post_id: post3.id, value: 5)
 
-      expect(counter.best_posts_post_rating_list(2).to_a).to eq(expected_result)
+      expect(info_provider.best_posts_post_rating_list(2).to_a).to eq(expected_result)
     end
   end
 
@@ -54,20 +54,20 @@ describe Counter do
     before do
       User.delete_all
       Post.delete_all
+
+      user1 = User.create(login: 'user_1')
+      user2 = User.create(login: 'user_2')
+      user3 = User.create(login: 'user_3')
+
+      Post.create(title: 'new_title_1', ip_address: '1.1.1.1', user_id: user1.id)
+      Post.create(title: 'new_title_2', ip_address: '1.1.1.1', user_id: user2.id)
+      Post.create(title: 'new_title_3', ip_address: '1.1.1.2', user_id: user1.id)
+      Post.create(title: 'new_title_4', ip_address: '1.1.1.2', user_id: user2.id)
+      Post.create(title: 'new_title_5', ip_address: '1.1.1.3', user_id: user3.id)
     end
 
-    user1 = User.create(login: 'user_1')
-    user2 = User.create(login: 'user_2')
-    user3 = User.create(login: 'user_3')
-
-    Post.create(title: 'new_title_1', ip_address: '1.1.1.1', user_id: user1.id)
-    Post.create(title: 'new_title_2', ip_address: '1.1.1.1', user_id: user2.id)
-    Post.create(title: 'new_title_3', ip_address: '1.1.1.2', user_id: user1.id)
-    Post.create(title: 'new_title_4', ip_address: '1.1.1.2', user_id: user2.id)
-    Post.create(title: 'new_title_5', ip_address: '1.1.1.3', user_id: user3.id)
-
     it 'returns ip list' do
-      expect(counter.ip_list.to_a).to eq(expected_result)
+      expect(info_provider.ip_list.to_a).to eq(expected_result)
     end
   end
 end
