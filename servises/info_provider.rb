@@ -1,9 +1,8 @@
 require 'pry'
 require 'sinatra/reloader'
-require './services/connection.rb'
+require './servises/connection.rb'
 
-# DbRequestExecuter ?
-class Counter
+class InfoProvider
   attr_reader :conn
 
   def initialize

@@ -1,6 +1,4 @@
-class CreatePostParamsValidator
-  include ActiveModel::Validations
-
+class CreatePostParamsValidator < ParamsValidator
   validates :title, :text, :login, :ip_address, presence: true
 
   def initialize(params)

@@ -4,7 +4,7 @@ class CreateEstimationResponser
   end
 
   def success_response
-    counter.average_post_rating(estimation.post_id)
+    average_post_rating = info_provider.average_post_rating(estimation.post_id)
   end
 
   def error_response
@@ -15,7 +15,7 @@ class CreateEstimationResponser
 
   attr_reader :estimation
 
-  def counter
-    @counter ||= Counter.new
+  def info_provider
+    @counter ||= InfoProvider.new
   end
 end
