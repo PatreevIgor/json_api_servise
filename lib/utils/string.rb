@@ -1,5 +1,5 @@
 class String
-  def integer?
+  def number?
     Integer(self)
 
     true

@@ -1,4 +1,4 @@
 class Post < ActiveRecord::Base
   belongs_to :user
-  has_many :estimation
+  has_many :estimations
 end

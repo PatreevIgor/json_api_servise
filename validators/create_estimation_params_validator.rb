@@ -21,19 +21,19 @@ class CreateEstimationParamsValidator < ParamsValidator
   end
 
   def estimation_range
-    return unless estimation.to_i > 5 || estimation.to_i <= 0
+    return if (1..5).cover?(estimation.to_i)
 
     errors.add(:estimation, message: "Invalid estimation: #{estimation}, range must be 1..5")
   end
 
   def estimation_type
-    return if estimation.integer?
+    return if estimation.number?
 
     errors.add(:estimation, message: "Estimation is not a Integer: #{post_id}")
   end
 
   def post_id_type
-    return if post_id.integer?
+    return if post_id.to_s.number?
 
     errors.add(:post, message: "Post id is not a Integer: #{post_id}")
   end

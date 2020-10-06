@@ -1,8 +1,8 @@
 require 'spec_helper'
 require './app.rb'
 
-describe InfoProvider do
-  subject(:info_provider) { described_class.new }
+describe PostsInfoFetcher do
+  subject(:posts_info_fetcher) { described_class.new }
 
   describe '#average_post_rating' do
     let(:expected_result) { [{ 'title' => 'some_title', 'avg' => '2.0000000000000000' }] }
@@ -14,7 +14,7 @@ describe InfoProvider do
       Estimation.create(post_id: post.id, value: 2)
       Estimation.create(post_id: post.id, value: 3)
 
-      expect(info_provider.average_post_rating(post.id).to_a).to eq(expected_result)
+      expect(posts_info_fetcher.average_post_rating(post.id).to_a).to eq(expected_result)
     end
   end
 
@@ -38,14 +38,11 @@ describe InfoProvider do
       Estimation.create(post_id: post3.id, value: 4)
       Estimation.create(post_id: post3.id, value: 5)
 
-      expect(info_provider.best_posts_post_rating_list(2).to_a).to eq(expected_result)
+      expect(posts_info_fetcher.best_posts_post_rating_list(2).to_a).to eq(expected_result)
     end
   end
 
   describe '#ip_list' do
-    # Получить список айпи, с которых постило несколько разных авторов.
-    # Массив объектов с полями: айпи и массив логинов авторов.
-
     let(:expected_result) do
       [{ 'ip_address' => '1.1.1.1', 'string_agg' => 'user_1;user_2' },
        { 'ip_address' => '1.1.1.2', 'string_agg' => 'user_1;user_2' }]
@@ -67,7 +64,7 @@ describe InfoProvider do
     end
 
     it 'returns ip list' do
-      expect(info_provider.ip_list.to_a).to eq(expected_result)
+      expect(posts_info_fetcher.ip_list.to_a).to eq(expected_result)
     end
   end
 end

@@ -1,3 +1,35 @@
+After config db, run seeds:
+  `rake db:drop; rake db:create; rake db:migrate; rake db:seed`
+
+
+Run application:
+```
+  RACK_ENV=development ruby app.rb
+  RACK_ENV=production ruby app.rb
+  RACK_ENV=test ruby app.rb
+```
+
+Run console:
+  `bundle exec irb -I. -r app.rb`
+
+
+Action create_post:
+  `curl -i -X POST -H "Content-Type: application/json" -d '{"login":"unic_new_login","title":"new-test-title","text":"new-test-test","ip_address":"new-author-ip"}' http://127.0.0.1:4567/create_post`
+
+
+Action create_estimation:
+  `curl -i -X POST -H "Content-Type: application/json" -d '{"post_id":"20028","estimation":"5"}' http://127.0.0.1:4567/create_estimation`
+
+
+Action get_best_rate_posts:
+  `http://127.0.0.1:4567/get_best_rate_posts?n=10`
+
+
+Action get-ip-list:
+  `http://127.0.0.1:4567/get-ip-list`
+
+
+
 Тестовое задание:
 
 Требуется создать JSON API сервис на Ruby без использования Ruby on Rails.

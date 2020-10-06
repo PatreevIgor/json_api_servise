@@ -1,9 +1,4 @@
 class EstimationCreater
-  include ActiveModel::Validations
-  attr_reader :created_estimation
-
-  validates :post_id, :estimation, presence: true
-
   def initialize(params)
     @post_id = params[:post_id]
     @estimation = params[:estimation]
@@ -11,17 +6,13 @@ class EstimationCreater
     reset_pk_sequence
   end
 
-  def create_estimation
-    @created_estimation = Estimation.create(post_id: post_id.to_i, value: estimation.to_i)
-  end
-
-  def success?
-    errors.empty?
+  def created_estimation
+    Estimation.create(post_id: post_id.to_i, value: estimation.to_i)
   end
 
   private
 
-  attr_reader :post_id, :estimation, :user_id
+  attr_reader :post_id, :estimation
 
   def reset_pk_sequence
     ActiveRecord::Base.connection.tables.each do |table_name|

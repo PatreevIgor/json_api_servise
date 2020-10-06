@@ -2,9 +2,6 @@ require 'faker'
 require 'pry'
 require 'activerecord-import'
 
-# rake db:drop; rake db:create; rake db:migrate; rake db:seed
-# bundle exec irb -I. -r app.rb
-
 puts 'Start deleting User Post Estimation'
 User.delete_all
 Post.delete_all
@@ -56,7 +53,7 @@ estimations = []
 n = 1
 5000.times do
   estimations << { id: n, value: rand(1..5), post_id: rand(Post.first.id..(Post.first.id + 100)) }
-  n +=1
+  n += 1
 end
 
 Estimation.insert_all estimations
