@@ -10,7 +10,7 @@ require_all './lib/utils'
 require_all './servises'
 require_all './models'
 require_all './decorators'
-require_all './validators/params_validator.rb'
+require_all './validators/base_params_validator.rb'
 require_all './validators/'
 
 before do
@@ -24,7 +24,7 @@ post '/create_post' do
     user = User.find_or_create_by(login: request_params[:login])
     request_params.merge!(user_id: user.id)
 
-    json post_creator.created_post
+    json post_creator.create_post
   else
     json create_post_params_validator.errors.messages, status: 422
   end
@@ -32,7 +32,7 @@ end
 
 post '/create_estimation' do
   if create_estimation_params_validator.valid?
-    estimation = estimation_creator.created_estimation
+    estimation = estimation_creator.create_estimation
 
     json posts_info_fetcher.average_post_rating(estimation.post_id)
   else
@@ -41,11 +41,11 @@ post '/create_estimation' do
 end
 
 get '/get_best_rate_posts' do
-  json posts_info_fetcher.best_posts_post_rating_list(params[:n])
+  json posts_info_fetcher.best_posts_rating_list(params[:n])
 end
 
-get '/get-ip-list' do
-  json ip_list_decorator(posts_info_fetcher.ip_list).ip_list
+get '/get_ip_list' do
+  json IpListDecorator.new(posts_info_fetcher.ip_list).ip_list
 end
 
 private
@@ -68,10 +68,6 @@ end
 
 def estimation_creator
   @post_creator ||= EstimationCreater.new(request_params)
-end
-
-def ip_list_decorator(data)
-  @ip_list_decorator ||= IpListDecorator.new(data)
 end
 
 def posts_info_fetcher

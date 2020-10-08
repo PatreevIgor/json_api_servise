@@ -1,4 +1,4 @@
-class CreatePostParamsValidator < ParamsValidator
+class CreatePostParamsValidator < BaseParamsValidator
   validates :title, :text, :login, :ip_address, presence: true
 
   def initialize(params)

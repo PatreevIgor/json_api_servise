@@ -1,4 +1,4 @@
-class CreateEstimationParamsValidator < ParamsValidator
+class CreateEstimationParamsValidator < BaseParamsValidator
   validates :post_id, :estimation, presence: true
   validate :existence_post
   validate :estimation_range

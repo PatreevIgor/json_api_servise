@@ -18,7 +18,7 @@ describe PostsInfoFetcher do
     end
   end
 
-  describe '#best_posts_post_rating_list' do
+  describe '#best_posts_rating_list' do
     let(:expected_result) do
       [{ 'avg' => '4.5000000000000000', 'title' => 'some_title_3' },
        { 'avg' => '3.5000000000000000', 'title' => 'some_title_2' }]
@@ -38,7 +38,7 @@ describe PostsInfoFetcher do
       Estimation.create(post_id: post3.id, value: 4)
       Estimation.create(post_id: post3.id, value: 5)
 
-      expect(posts_info_fetcher.best_posts_post_rating_list(2).to_a).to eq(expected_result)
+      expect(posts_info_fetcher.best_posts_rating_list(2).to_a).to eq(expected_result)
     end
   end
 

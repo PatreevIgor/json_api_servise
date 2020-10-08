@@ -1,7 +1,7 @@
 require 'pry'
 require 'sinatra/reloader'
 
-class PostsInfoFetcher < InfoFetcher
+class PostsInfoFetcher
   def average_post_rating(post_id)
     connection.exec(<<-SQL.squish)
       SELECT posts.title, AVG(estimations.value)
@@ -13,7 +13,7 @@ class PostsInfoFetcher < InfoFetcher
     SQL
   end
 
-  def best_posts_post_rating_list(num)
+  def best_posts_rating_list(num)
     connection.exec(<<-SQL.squish)
       SELECT posts.title, AVG(estimations.value)
       FROM estimations
@@ -34,5 +34,11 @@ class PostsInfoFetcher < InfoFetcher
       GROUP BY posts.ip_address
       HAVING count(DISTINCT users.login) > 1
     SQL
+  end
+
+  private
+
+  def connection
+    @connection ||= Connection.new.up
   end
 end

@@ -1,3 +1,3 @@
-class ParamsValidator
+class BaseParamsValidator
   include ActiveModel::Validations
 end

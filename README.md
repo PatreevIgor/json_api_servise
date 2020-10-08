@@ -25,8 +25,8 @@ Action get_best_rate_posts:
   `http://127.0.0.1:4567/get_best_rate_posts?n=10`
 
 
-Action get-ip-list:
-  `http://127.0.0.1:4567/get-ip-list`
+Action get_ip_list:
+  `http://127.0.0.1:4567/get_ip_list`
 
 
 

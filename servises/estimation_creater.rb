@@ -6,7 +6,7 @@ class EstimationCreater
     reset_pk_sequence
   end
 
-  def created_estimation
+  def create_estimation
     Estimation.create(post_id: post_id.to_i, value: estimation.to_i)
   end
 
